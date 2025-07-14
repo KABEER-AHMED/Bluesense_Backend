@@ -1,0 +1,7 @@
+/mnt/d/Workflow/ChatApp.Backend/obj/Debug/net9.0/ChatApp.Backend.csproj.AssemblyReference.cache
+/mnt/d/Workflow/ChatApp.Backend/obj/Debug/net9.0/ChatApp.Backend.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/d/Workflow/ChatApp.Backend/obj/Debug/net9.0/ChatApp.Backend.AssemblyInfoInputs.cache
+/mnt/d/Workflow/ChatApp.Backend/obj/Debug/net9.0/ChatApp.Backend.AssemblyInfo.cs
+/mnt/d/Workflow/ChatApp.Backend/obj/Debug/net9.0/ChatApp.Backend.csproj.CoreCompileInputs.cache
+/mnt/d/Workflow/ChatApp.Backend/obj/Debug/net9.0/ChatApp.Backend.MvcApplicationPartsAssemblyInfo.cs
+/mnt/d/Workflow/ChatApp.Backend/obj/Debug/net9.0/ChatApp.Backend.MvcApplicationPartsAssemblyInfo.cache
