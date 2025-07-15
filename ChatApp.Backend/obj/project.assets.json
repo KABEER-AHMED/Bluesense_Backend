@@ -4225,11 +4225,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/d/Workflow/ChatApp.Backend/ChatApp.Backend.csproj",
+      "projectUniqueName": "/mnt/d/Workflow/Bluesense_Backend/ChatApp.Backend/ChatApp.Backend.csproj",
       "projectName": "ChatApp.Backend",
-      "projectPath": "/mnt/d/Workflow/ChatApp.Backend/ChatApp.Backend.csproj",
+      "projectPath": "/mnt/d/Workflow/Bluesense_Backend/ChatApp.Backend/ChatApp.Backend.csproj",
       "packagesPath": "/home/kabeer/.nuget/packages/",
-      "outputPath": "/mnt/d/Workflow/ChatApp.Backend/obj/",
+      "outputPath": "/mnt/d/Workflow/Bluesense_Backend/ChatApp.Backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/kabeer/.nuget/NuGet/NuGet.Config"

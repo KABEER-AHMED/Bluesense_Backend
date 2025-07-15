@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "h2tmS4YqMNA=",
+  "dgSpecHash": "ga+/TYN9IDo=",
   "success": false,
-  "projectFilePath": "/mnt/d/Workflow/ChatApp.Backend/ChatApp.Backend.csproj",
+  "projectFilePath": "/mnt/d/Workflow/Bluesense_Backend/ChatApp.Backend/ChatApp.Backend.csproj",
   "expectedPackageFiles": [
     "/home/kabeer/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/home/kabeer/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

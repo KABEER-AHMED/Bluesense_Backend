@@ -4,15 +4,7 @@ using ChatApp.Backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Securit                if (storedToken == null)
-                {
-                    return new ApiResponse<bool>
-                    {
-                        IsSuccess = false,
-                        Message = "Token not found",
-                        Data = false
-                    };
-                }
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using BCrypt.Net;
@@ -251,7 +243,7 @@ namespace ChatApp.Backend.Services
                 {
                     return new ApiResponse<bool>
                     {
-                        Success = false,
+                        IsSuccess = false,
                         Message = "Token not found",
                         Data = false
                     };
@@ -262,7 +254,7 @@ namespace ChatApp.Backend.Services
 
                 return new ApiResponse<bool>
                 {
-                    Success = true,
+                    IsSuccess = true,
                     Message = "Token revoked successfully",
                     Data = true
                 };
@@ -272,7 +264,7 @@ namespace ChatApp.Backend.Services
                 _logger.LogError(ex, "Error occurred during token revocation");
                 return new ApiResponse<bool>
                 {
-                    Success = false,
+                    IsSuccess = false,
                     Message = "An error occurred during token revocation",
                     Data = false,
                     Errors = new List<string> { ex.Message }
@@ -297,7 +289,7 @@ namespace ChatApp.Backend.Services
 
                 return new ApiResponse<bool>
                 {
-                    Success = true,
+                    IsSuccess = true,
                     Message = "All tokens revoked successfully",
                     Data = true
                 };
@@ -307,7 +299,7 @@ namespace ChatApp.Backend.Services
                 _logger.LogError(ex, "Error occurred during all tokens revocation for user {UserId}", userId);
                 return new ApiResponse<bool>
                 {
-                    Success = false,
+                    IsSuccess = false,
                     Message = "An error occurred during tokens revocation",
                     Data = false,
                     Errors = new List<string> { ex.Message }
@@ -323,7 +315,7 @@ namespace ChatApp.Backend.Services
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim("UserId", user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -347,11 +339,10 @@ namespace ChatApp.Backend.Services
             {
                 Id = Guid.NewGuid(),
                 UserId = user.Id,
-                Token = GenerateRandomToken(),
-                Jti = Guid.NewGuid().ToString(),
+                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                ExpiresAt = DateTime.UtcNow.AddDays(GetRefreshTokenExpiryDays()),
                 DeviceInfo = deviceInfo,
                 IpAddress = ipAddress,
-                ExpiresAt = DateTime.UtcNow.AddDays(GetRefreshTokenExpiryDays()),
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -359,19 +350,12 @@ namespace ChatApp.Backend.Services
             return refreshToken;
         }
 
-        public async Task<RefreshToken?> ValidateRefreshTokenAsync(string token)
+        private async Task<RefreshToken?> ValidateRefreshTokenAsync(string token)
         {
-            return await _context.RefreshTokens
-                .Include(rt => rt.User)
-                .FirstOrDefaultAsync(rt => rt.Token == token && rt.IsActive);
-        }
+            var refreshToken = await _context.RefreshTokens
+                .FirstOrDefaultAsync(rt => rt.Token == token && !rt.IsRevoked && !rt.IsExpired);
 
-        private string GenerateRandomToken()
-        {
-            using var rng = RandomNumberGenerator.Create();
-            var randomBytes = new byte[64];
-            rng.GetBytes(randomBytes);
-            return Convert.ToBase64String(randomBytes);
+            return refreshToken;
         }
 
         private int GetAccessTokenExpiryMinutes()
